@@ -31,7 +31,17 @@
     <select id="findUserBy" parameterType="user" resultType="user">
         SELECT * FROM taskone
         <where>
-            <include refid="findBy"/>
+            <if test="username!=null and username!=''">  AND username=#{username}</if>
+            <if test="id!=null and id!=''">  AND  id=#{id}</if>
+            <if test="QQ!=null and QQ!=''">   AND   QQ=#{QQ}</if>
+            <if test="type!='' and type!=null">AND type=#{type} </if>
+            <if test="joinTime!=null and joinTime!=''">  AND   joinTime=#{joinTime}</if>
+            <if test="school!=null and school!=''">   AND     school=#{school}</if>
+            <if test="onlineId!=null and onlineId!=''"> AND  onlineId=#{onlineId}</if>
+            <if test="daily!=null and daily!=''">  AND   daily=#{daily}</if>
+            <if test="description!=null and description!=''">  AND description=#{description}</if>
+            <if test="counsellor!=null and counsellor!=''"> AND counsellor=#{counsellor}</if>
+            <if test="way!=null and way!=''"> AND   way=#{way}</if>
         </where>
     </select>
 
@@ -42,6 +52,9 @@
         values
         (#{username},#{QQ},#{type},#{joinTime},#{school},#{onlineId},#{daily},
         #{description},#{counsellor},#{way},#{create_at},#{update_at})
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <!--删除数据-->
@@ -52,17 +65,14 @@
     <!--更新数据-->
     <update id="updateUser" parameterType="user" >
         update taskone
-        <set>
+        set
             <include refid="findBy"/>
-        </set>
-
         <!--
          username=#{username},QQ=#{QQ},type=#{type},joinTime=#{joinTime},school=#{school},
          onlineId=#{onlineId},daily=#{daily},description=#{description},counsellor=#{counsellor},
          way=#{way},update_at=#{update_at}
         -->
         where id=#{id}
-
     </update>
 
     <select id="findByName" parameterType="String" resultType="int">

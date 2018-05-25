@@ -24,7 +24,7 @@ public class MainClass {
 
     public static void main(String[] args) {
 
-        ApplicationContext applicationContext=new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");
+        ApplicationContext applicationContext=new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
         UserService userService=(UserService)applicationContext.getBean("service");
 
 //        自定义查询数据
@@ -37,17 +37,26 @@ public class MainClass {
             System.out.println(e.getMessage());
         }
 
-//        更改数据
-        User user1= new User();
-        user.setId(2);
-        user1.setUsername("吴旷");
-        user1.setQQ("201805201126");
-        user1.setType("web");
-        user1.setDescription("电饭锅");
+//        User user = new User();
+//        user.setUsername("安师傅2");
+//        user.setQQ("201805121234");
+//        user.setType("QA");
+//        user.setDescription("插入数据2");
+//        user.setCreate_at(TimeReversal.Datetolong(new Date()));
+//        Boolean InsertBool=userService.insertUser(user);
+//        System.out.println(InsertBool);
+//
+//
+//      插入数据
+        User user1 = new User();
+        user1.setUsername("安师傅2");
+        user1.setQQ("201805121234");
+        user1.setType("QA");
+        user1.setDescription("插入数据2");
         user1.setCreate_at(TimeReversal.Datetolong(new Date()));
         try {
-            userService.insertUser(user);
-            System.out.println();
+            userService.insertUser(user1);
+            System.out.println(user1.getId());
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -60,9 +69,24 @@ public class MainClass {
                  System.out.println(e.getMessage());
              }
 
-//             删除数据
+             //更新数据
+            User user2 = new User();
+            user2.setId(2);
+            user2.setUsername("卡卡");
+            user2.setQQ("201805201126");
+            user2.setCounsellor("李莉");
+            user2.setDescription("电饭锅");
+            user2.setUpdate_at(TimeReversal.Datetolong(new Date()));
+            try{
+                boolean UpdateBool=userService.updateUser(user2);
+                System.out.println(UpdateBool);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
+//            删除数据
              try{
-                 Boolean DelBool=userService.delUser(20);
+                 Boolean DelBool=userService.delUser(47);
                  System.out.println(DelBool);
              }catch (Exception e){
                  System.out.println(e.getMessage());
